@@ -1,0 +1,22 @@
+- [x] Per-student result reset (retake) in Settings.
+- [x] Grade scale A+..C (70/65/60/55/50/46 of 75).
+- [x] Login = ism@gmail.com, password = ism+3 digits.
+- [x] Students list (name/login/password) PDF download.
+- [x] Support pasting question text, tables and images.
+- [x] Correct statistics chart and verify counts.
+- [x] Remove agency text from login screen.
+- [x] Verify the updated experience and deliver source code.
+- [x] Add reference-style per-variant dashboard chart using actual final results.
+- [x] Block student login and new exam after completion; keep admin reset available.
+- [x] Verify duplicate-name unique logins and exact automatic weights with minimum 1 point.
+- [x] Difficulty-based automatic weights (sum exact, min 1); not calibrated Rasch scoring.
+- [x] Verify student creation, saved accounts across browsers, and stale admin credentials handling.
+- [x] Unify normalized grading across API, result views, statistics and PDF without changing other modules.
+- [x] Preserve exam maxima, fractional writing and pending grades; identify Rasch as uncalibrated.
+- [x] Run grading regression tests and verify result/report flow.
+- [x] Remove visible 75-scale columns; 53 regression tests passed and browser PDF fixture confirms 73/80 → A+ (live admin verification unavailable with current credentials).
+- [x] Show collected score without maximum and percentage relative to 65 capped at 100; 62 tests and browser PDF fixture verified reference values (stored results unchanged).
+- [x] New ZIYOKOR logo on login and admin screens.
+- [x] Variant open date/time: admin sets it at creation, student sees when the exam opens, server blocks early start.
+- [x] Natijalar tab with month filter.
+- [x] Dashboard monthly results chart (count + average % per month, best month).
