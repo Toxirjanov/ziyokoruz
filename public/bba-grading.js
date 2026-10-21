@@ -31,6 +31,6 @@ export function snapshotResult(r, db) {
 export function validateWrittenScore(value, maximum) {
   if (value === '' || value === null) return null;
   const score = Number(value), max = Number(maximum);
-  if (!Number.isFinite(score) || !Number.isFinite(max) || max < 0 || score < 0 || score > max) throw new Error('Yozma ball 0 va maksimal yozma ball oralig‘ida bo‘lsin.');
+  if (!Number.isFinite(score) || !Number.isFinite(max) || score < 0) throw new Error('Yozma ball 0 dan kichik bo‘lmasin.');
   return score;
 }
