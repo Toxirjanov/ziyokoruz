@@ -4,7 +4,7 @@ export function calculateGrade({ testScore, writtenScore = 0, maxScore }) {
   const pending = writtenScore === null || writtenScore === undefined || writtenScore === '';
   const written = pending ? null : Number(writtenScore);
   const raw = pending ? null : test + written;
-  const invalid = !Number.isFinite(max) || max <= 0 || !Number.isFinite(test) || test < 0 || test > max || (!pending && (!Number.isFinite(written) || written < 0 || raw > max));
+  const invalid = !Number.isFinite(max) || max <= 0 || !Number.isFinite(test) || test < 0 || test > max || (!pending && (!Number.isFinite(written) || written < 0));
   const percentage = !invalid && !pending ? Math.min(raw / 65 * 100, 100) : null;
   const scaledScore75 = !invalid && !pending ? raw * 75 / max : null;
   const grade = invalid || pending ? null : raw >= 70 ? 'A+' : raw >= 65 ? 'A' : raw >= 60 ? 'B+' : raw >= 55 ? 'B' : raw >= 50 ? 'C+' : raw >= 46 ? 'C' : 'None';
