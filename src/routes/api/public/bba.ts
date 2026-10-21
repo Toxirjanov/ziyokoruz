@@ -9,7 +9,8 @@ type P = { key: string; start: number; end: number; ans: Record<string, unknown>
 
 const DEF: DBT = { st: [{ login: "demo", pass: "demo123", name: "Namuna O'quvchi", sid: 1 }], qs: [], res: [], dur: 90 };
 const PB = 100000; // progress rows: bba_state.id = PB + student sid
-const j = (b: unknown, s = 200) => Response.json(b, { status: s });
+const CORS = { "Access-Control-Allow-Origin": "*", "Access-Control-Allow-Methods": "POST, OPTIONS", "Access-Control-Allow-Headers": "content-type" };
+const j = (b: unknown, s = 200) => Response.json(b, { status: s, headers: CORS });
 const rnd = (n: number, abc: string) => {
   const a = new Uint32Array(n);
   crypto.getRandomValues(a);
@@ -25,6 +26,7 @@ const slug = (s: string) =>
 export const Route = createFileRoute("/api/public/bba")({
   server: {
     handlers: {
+      OPTIONS: async () => new Response(null, { status: 204, headers: CORS }),
       POST: async ({ request }) => {
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const b = (await request.json()) as {

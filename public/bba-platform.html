@@ -71,8 +71,9 @@ table.nt th{background:#f1f5f9;color:#334155;font-weight:600}table.nt td{vertica
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let DB;try{DB=JSON.parse(localStorage.getItem('bba'))}catch(e){}
 DB=DB||{st:[{login:'demo',pass:'demo123',name:"Namuna O'quvchi",jsh:'12345678901234',pas:'AA1234567'}],qs:[],res:[],dur:90};
-const SBU='https://txjilwarlbddzpqvurbs.supabase.co',SBK='sb_publishable_fIqPCUDOFb1jYgE7g98GEg_XwzDBx6R';const gt=(u,b)=>fetch(SBU+'/auth/v1/'+u,{method:'POST',headers:{apikey:SBK,'content-type':'application/json'},body:JSON.stringify(b)}).then(async r=>({ok:r.ok,d:await r.json().catch(()=>({}))}));
-const api=b=>fetch('/api/public/bba',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(b)}).then(async r=>({...await r.json(),status:r.status}));
+const SBU='https://askinvtsbnrackvuunfy.supabase.co',SBK='sb_publishable_Qwv4HsKFl3BZwUxAuc-mhA_0XfjOtEi';const gt=(u,b)=>fetch(SBU+'/auth/v1/'+u,{method:'POST',headers:{apikey:SBK,'content-type':'application/json'},body:JSON.stringify(b)}).then(async r=>({ok:r.ok,d:await r.json().catch(()=>({}))}));
+const APIB=location.protocol==='file:'?'https://ziyokoruz.lovable.app':'';
+const api=b=>fetch(APIB+'/api/public/bba',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(b)}).then(async r=>({...await r.json(),status:r.status}));
 const save=()=>{try{localStorage.setItem('bba',JSON.stringify(DB))}catch(e){}if(S.ad)api({a:'save',...S.ad,db:DB}).then(d=>{if(!d.ok)alert(d.message||'Baholashni saqlab bo‘lmadi.');}).catch(()=>alert('Baholash saqlanmadi. Internetni tekshiring.'))};
 async function sendRes(r){if(!S.cr)throw new Error();const d=await api({a:'result',...S.cr,r});if(!d.ok)throw new Error();DB.res.push(r);try{localStorage.setItem('bba',JSON.stringify(DB));localStorage.removeItem('bbaU')}catch(e){}}
 let S={v:'login'},E={};
