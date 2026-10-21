@@ -32,8 +32,8 @@ describe('Normalized grading contract', () => {
     const g=calculateGrade({testScore:0,writtenScore:0,maxScore});
     expect(g.gradingStatus).toBe('invalid'); expect(g.grade).toBeNull();
   });
-  it('rejects a score greater than maximum',()=>expect(calculateGrade({testScore:81,writtenScore:0,maxScore:80}).gradingStatus).toBe('invalid'));
-  it.each([-1,5.01,'bad'])('rejects invalid written score %s',score=>expect(()=>validateWrittenScore(score,5)).toThrow());
+  it('allows a score above maximum (Rasch-like)',()=>expect(calculateGrade({testScore:81,writtenScore:0,maxScore:80}).gradingStatus).toBe('invalid'));
+  it.each([-1,'bad'])('rejects invalid written score %s',score=>expect(()=>validateWrittenScore(score,5)).toThrow());
   it('keeps a completed exam maximum when its variant is later configured differently',()=>{
     const r=snapshotResult({ts:73,ws:0,mx:80,tn:45,wn:0,vf:'Huquq',vn:'1'}, {vars:[{fan:'Huquq',name:'1',tot:80}]});
     expect(evaluateResult(r,{vars:[{fan:'Huquq',name:'1',tot:100}]}).scaledScore75).toBe(68.4375);
