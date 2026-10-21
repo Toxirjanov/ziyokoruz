@@ -14,24 +14,7 @@ export type Database = {
   }
   public: {
     Tables: {
-      bba_state: {
-        Row: {
-          data: Json
-          id: number
-          updated_at: string
-        }
-        Insert: {
-          data?: Json
-          id: number
-          updated_at?: string
-        }
-        Update: {
-          data?: Json
-          id?: number
-          updated_at?: string
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never
