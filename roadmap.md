@@ -20,5 +20,5 @@
 - [x] Variant open date/time: admin sets it at creation, student sees when the exam opens, server blocks early start.
 - [x] Natijalar tab with month filter.
 - [x] Dashboard monthly results chart (count + average % per month, best month).
-- [ ] Add isolated branch admin accounts and super-admin monthly subject reports.
-- [ ] Verify permission boundaries and branch flows; deliver latest clean source ZIP.
+- [x] Add isolated branch admin accounts and super-admin monthly subject reports.
+- [x] Verify permission boundaries and branch flows; deliver latest clean source ZIP.
