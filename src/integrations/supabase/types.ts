@@ -14,6 +14,130 @@ export type Database = {
   }
   public: {
     Tables: {
+      bba_account_roles: {
+        Row: {
+          account_id: string
+          branch_id: string | null
+          role: string
+        }
+        Insert: {
+          account_id: string
+          branch_id?: string | null
+          role: string
+        }
+        Update: {
+          account_id?: string
+          branch_id?: string | null
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bba_account_roles_account_id_fkey"
+            columns: ["account_id"]
+            isOneToOne: true
+            referencedRelation: "bba_accounts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "bba_account_roles_branch_id_fkey"
+            columns: ["branch_id"]
+            isOneToOne: false
+            referencedRelation: "bba_branches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bba_accounts: {
+        Row: {
+          created_at: string
+          id: string
+          login: string
+          password_hash: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          login: string
+          password_hash: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          login?: string
+          password_hash?: string
+        }
+        Relationships: []
+      }
+      bba_branch_progress: {
+        Row: {
+          branch_id: string
+          data: Json
+          sid: number
+        }
+        Insert: {
+          branch_id: string
+          data?: Json
+          sid: number
+        }
+        Update: {
+          branch_id?: string
+          data?: Json
+          sid?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bba_branch_progress_branch_id_fkey"
+            columns: ["branch_id"]
+            isOneToOne: false
+            referencedRelation: "bba_branches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bba_branch_state: {
+        Row: {
+          branch_id: string
+          data: Json
+          updated_at: string
+        }
+        Insert: {
+          branch_id: string
+          data?: Json
+          updated_at?: string
+        }
+        Update: {
+          branch_id?: string
+          data?: Json
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bba_branch_state_branch_id_fkey"
+            columns: ["branch_id"]
+            isOneToOne: true
+            referencedRelation: "bba_branches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      bba_branches: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
       bba_state: {
         Row: {
           data: Json
@@ -37,7 +161,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      bba_create_admin: {
+        Args: { _hash: string; _login: string; _name: string; _super?: boolean }
+        Returns: string
+      }
     }
     Enums: {
       [_ in never]: never

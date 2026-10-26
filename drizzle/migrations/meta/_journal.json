@@ -29,6 +29,13 @@
       "when": 1792559383504,
       "tag": "0003_create_bba_state",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793003070288,
+      "tag": "0004_bba_branch_admin_isolation",
+      "breakpoints": true
     }
   ]
 }
