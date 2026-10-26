@@ -84,7 +84,7 @@ export const Route = createFileRoute("/api/public/bba")({
           const { data: states } = await supabaseAdmin.from('bba_branch_state').select('branch_id,data');
           const matches = (states || []).filter(x => (x.data as DBT).st?.some(st=>st.login===b.u && st.pass===b.p));
           if (b.branch && b.branch !== 'primary') branchId = matches.find(x=>x.branch_id===b.branch)?.branch_id || null;
-          else if (matches.length===1 && !legacy.st.some(st=>st.login===b.u && st.pass===b.p)) branchId=matches[0].branch_id;
+          else if (matches.length===1 && !legacy.st.some(st=>st.login===b.u && st.pass===b.p)) branchId=matches[0]?.branch_id || null;
         }
         if (branchId) {
           const { data: state, error } = await supabaseAdmin.from('bba_branch_state').select('data').eq('branch_id',branchId).single();
