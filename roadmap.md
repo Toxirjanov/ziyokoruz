@@ -22,3 +22,5 @@
 - [x] Dashboard monthly results chart (count + average % per month, best month).
 - [x] Add isolated branch admin accounts and super-admin monthly subject reports.
 - [x] Verify permission boundaries and branch flows; deliver latest clean source ZIP.
+- [ ] Add reference-style super admin charts, branches, administrators, filtered reports, activity list and exports.
+- [ ] Verify super admin reports and deliver clean updated source ZIP.
