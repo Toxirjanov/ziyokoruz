@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { monthlyParticipation, roleCanAct, type Participation } from "@/lib/bba-branches";
 import { examCompleted, uniqueStudentLogin } from "@/lib/bba-access";
+import { superReportDetails, type ReportStudent, type ReportResult } from '@/lib/bba-super-report';
 import { snapshotResult, evaluateResult, validateWrittenScore } from '../../../../public/bba-grading.js';
 
 type St = { login: string; pass: string; name: string; sid?: number; [k: string]: unknown };
@@ -55,7 +56,19 @@ export const Route = createFileRoute("/api/public/bba")({
           const { data: progress } = await supabaseAdmin.from('bba_branch_progress').select('branch_id,sid,data');
           const { data: oldProgress } = await supabaseAdmin.from('bba_state').select('id,data').gte('id', PB);
           const entries: Participation[] = [];
+           const reportStudents: ReportStudent[] = [], reportResults: ReportResult[] = [];
           const collect = (branch: string, data: DBT, prs: {sid:number;data:unknown}[]) => {
+             const branchId = branch === 'Ziyokor' ? 'primary' : branch;
+             const name = branch === 'Ziyokor' ? 'Ziyokor' : branches?.find(x => x.id === branch)?.name || branch;
+             for (const st of data.st || []) reportStudents.push({branchId, branch:name, login:st.login, name:st.name});
+             const uniqueResults = new Map((data.res || []).map(r => [r.id, r]));
+             for (const item of prs) { const r = (item.data as P)?.r; if (r) uniqueResults.set(r.id, r); }
+             for (const r of uniqueResults.values()) {
+               const g = evaluateResult(r, data);
+               const subject = String(r['vf'] || String(r['fan'] || '').split(' — ')[0]);
+               reportResults.push({branchId, branch:name, student:String(r['uid'] || r.id), name:String(r['name'] || ''), subject, at:Number(r.id), test:Number(r['ts'] ?? r['c']) || 0, written:r['ws'] == null || r['ws'] === '' ? null : Number(r['ws']), total:g.rawScore, percentage:g.percentage});
+               entries.push({branch,student:String(r['uid'] || r.id),subject,at:Number(r.id)});
+             }
             for (const r of data.res || []) entries.push({ branch, student: String(r['uid'] || r.id), subject: String(r['vf'] || String(r['fan'] || '').split(' — ')[0]), at: Number(r.id) });
             for (const item of prs) {
               const pr = item.data as P;
@@ -74,7 +87,7 @@ export const Route = createFileRoute("/api/public/bba")({
           const report = monthlyParticipation(entries,month);
           const { data: accounts } = await supabaseAdmin.from('bba_accounts').select('id,login,created_at');
           const { data: roles } = await supabaseAdmin.from('bba_account_roles').select('account_id,branch_id');
-          return j({ superAdmin: true, month, ...report, groups:report.groups.map(g=>({...g,branch:g.branch==='Ziyokor'?'Ziyokor':branches?.find(x=>x.id===g.branch)?.name || g.branch})), branches:[{id:'primary',name:'Ziyokor',login:String((legacy['adm'] as {u?:string})?.u || 'admin')},...(branches || []).map(x=>({...x,login:accounts?.find(a=>a.id===roles?.find(r=>r.branch_id===x.id)?.account_id)?.login || ''}))] });
+           return j({ superAdmin: true, month, ...report, ...superReportDetails(entries, reportStudents, reportResults, month), groups:report.groups.map(g=>({...g,branchId:g.branch==='Ziyokor'?'primary':g.branch,branch:g.branch==='Ziyokor'?'Ziyokor':branches?.find(x=>x.id===g.branch)?.name || g.branch})), activity:entries.map(e=>({...e,branch:e.branch==='Ziyokor'?'Ziyokor':branches?.find(x=>x.id===e.branch)?.name || e.branch})).filter((e,i,a)=>a.findIndex(x=>x.branch===e.branch&&x.student===e.student&&x.subject===e.subject&&x.at===e.at)===i).sort((a,b)=>b.at-a.at).slice(0,100), branches:[{id:'primary',name:'Ziyokor',login:String((legacy['adm'] as {u?:string})?.u || 'admin')},...(branches || []).map(x=>({...x,login:accounts?.find(a=>a.id===roles?.find(r=>r.branch_id===x.id)?.account_id)?.login || ''}))] });
         }
         let branchId = role?.role === 'branch_admin' ? role.branch_id : null;
         const ad = (legacy['adm'] as { u: string; p: string }) || { u: 'admin', p: 'admin123' };
