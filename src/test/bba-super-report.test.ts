@@ -11,7 +11,7 @@ describe('Super admin detailed report', () => {
     const entry = {branch:'primary', student:'one', subject:'Matematika', at:Date.UTC(2026,8,30,20)};
     const report = superReportDetails([entry,entry], [], [row], '2026-10');
     expect(report.trend.at(-1)?.participants).toBe(1);
-    expect(report.trend[0].month).toBe('2025-11');
+    expect(report.trend[0]?.month).toBe('2025-11');
     expect(report.previous.participants).toBe(0);
   });
 });

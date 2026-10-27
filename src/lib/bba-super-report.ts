@@ -5,7 +5,7 @@ export function superReportDetails(entries: Participation[], students: ReportStu
   const inMonth = (at: number, m: string) => Number.isFinite(at) && new Date(at + 5 * 3600000).toISOString().slice(0, 7) === m;
   const selected = results.filter(r => inMonth(r.at, month));
   const average = (rows: ReportResult[]) => { const final = rows.filter(r => r.percentage !== null); return final.length ? final.reduce((n, r) => n + Number(r.percentage), 0) / final.length : null; };
-  const [year, mon] = month.split('-').map(Number);
+  const year = Number(month.slice(0, 4)), mon = Number(month.slice(5, 7));
   const trend = Array.from({ length: 12 }, (_, i) => {
     const m = new Date(Date.UTC(year, mon - 12 + i, 1)).toISOString().slice(0, 7);
     return { month: m, ...monthlyParticipation(entries, m), average: average(results.filter(r => inMonth(r.at, m))) };
