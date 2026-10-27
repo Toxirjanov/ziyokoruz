@@ -237,4 +237,4 @@ T.home=()=>{const pairs=dashboardPairs(),fans=[...new Set(pairs.map(v=>v.fan))];
 window.addEventListener('load',()=>{render();
 try{const c=JSON.parse(localStorage.getItem('bbaU'));if(c&&c.u!='admin')api({a:'login',...c}).then(d=>{if(!d.error&&d.s)enterSt(c.u,c.p,d);else if(d.completed){localStorage.removeItem('bbaU');$('#er').textContent='Siz imtihonni yakunlab bo‘lgansiz.'}}).catch(()=>{})}catch(e){}
 });
-</script></body></html>
+</script><link rel="stylesheet" href="/bba-super.css?v=1"><script src="/bba-super.js?v=1"></script></body></html>

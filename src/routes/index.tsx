@@ -19,7 +19,7 @@ function Index() {
     <iframe
       className="platform-frame"
       title="BBA — Milliy sertifikat test platformasi"
-      src="/bba-platform.html?v=29"
+      src="/bba-platform.html?v=30"
       allow="camera; fullscreen"
     />
   );

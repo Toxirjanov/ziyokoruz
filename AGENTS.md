@@ -18,3 +18,4 @@ Custom exam completion and unique-login rules live in a browser-safe access modu
 Branch credentials are hashed with Web Crypto and roles live in separate protected account-role rows; the raw legacy API validates credentials server-side on every request to preserve the iframe contract.
 The original Ziyokor state stays in bba_state; additional branches use branch-keyed state and progress so admin/student operations never share exam data.
 Super-admin participation reports deduplicate branch/student/subject pairs by Tashkent calendar month, including started progress and completed results.
+Super-admin presentation lives in separate browser assets and detailed report calculations in a tested server-safe helper, so branch/student views remain unchanged.
